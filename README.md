@@ -11,7 +11,7 @@ Contacto: Gerardo López · WhatsApp +52 442 157 1141 · josegerardo@100seguros.
 En Claude (Cowork de escritorio), una sola vez:
 
 ```
-/plugin marketplace add GERARDO-USUARIO/kit-100seguros-marketplace
+/plugin marketplace add josegerardo-prog/kit-100seguros-marketplace
 /plugin install kit-agente-pyme-100seguros@100seguros
 ```
 
