@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Propuesta — {{NEGOCIO}}</title>
+<style>
+  /* ===== PLANTILLA OFICIAL DE PROPUESTA — KIT 100% SEGUROS =====
+     Reglas: carta (letter), máx 2 páginas. Sustituir {{PLACEHOLDERS}}.
+     Con 1 opción: usar clase .opciones.una · 2 opciones: .dos · 3: .tres
+     Borrar los bloques que no apliquen. NO agregar tipografías externas. */
+  * { margin:0; padding:0; box-sizing:border-box; }
+  @page { size: letter; margin: 0; }
+  html,body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color:#2b2b2b; font-size:10.5pt; line-height:1.5; }
+  .page { width:8.5in; min-height:10.95in; padding:0.55in 0.65in 0.5in; position:relative; page-break-after:always; }
+  .page:last-child { page-break-after:auto; }
+
+  /* Header */
+  .topbar { height:6px; background:linear-gradient(90deg,#c98a2d,#e0b25c); border-radius:3px; margin-bottom:22px; }
+  .header { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:6px; }
+  .kicker { font-size:8.5pt; letter-spacing:2.5px; text-transform:uppercase; color:#c98a2d; font-weight:700; }
+  h1 { font-size:21pt; font-weight:800; color:#1a1a1a; letter-spacing:-0.3px; margin-top:2px; }
+  .meta { text-align:right; font-size:8.5pt; color:#777; line-height:1.6; }
+  .meta strong { color:#2b2b2b; font-size:9.5pt; }
+
+  /* En juego */
+  .enjuego { background:#faf6ef; border-left:4px solid #c98a2d; border-radius:0 8px 8px 0; padding:12px 16px; margin:16px 0 20px; }
+  .enjuego h2 { font-size:9pt; letter-spacing:1.5px; text-transform:uppercase; color:#a06f1e; margin-bottom:4px; }
+  .enjuego p { font-size:10.5pt; color:#4a4a4a; }
+
+  /* Opciones */
+  .opciones { display:flex; gap:14px; margin-bottom:20px; align-items:stretch; }
+  .opciones.una .op { max-width:70%; margin:0 auto; }
+  .op { flex:1; border:1.5px solid #e3ddd2; border-radius:10px; padding:16px 16px 14px; position:relative; background:#fff; display:flex; flex-direction:column; }
+  .op .precio { margin-top:auto; }
+  .op.recomendada { border:2px solid #c98a2d; background:#fffdf8; }
+  .badge { position:absolute; top:-10px; left:50%; transform:translateX(-50%); background:#c98a2d; color:#fff; font-size:7.5pt; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; padding:3px 12px; border-radius:20px; white-space:nowrap; }
+  .op .aseg { font-size:8pt; letter-spacing:1.5px; text-transform:uppercase; color:#999; }
+  .op h3 { font-size:13pt; font-weight:800; color:#1a1a1a; margin:2px 0 10px; }
+  .op ul { list-style:none; margin-bottom:12px; }
+  .op li { font-size:9.5pt; color:#4a4a4a; padding:4px 0 4px 20px; position:relative; border-bottom:1px solid #f2ede4; }
+  .op li:last-child { border-bottom:none; }
+  .op li::before { content:"✓"; position:absolute; left:0; color:#c98a2d; font-weight:800; }
+  .precio { background:#f7f3ea; border-radius:8px; text-align:center; padding:10px 8px 8px; }
+  .precio .anual { font-size:15pt; font-weight:800; color:#1a1a1a; }
+  .precio .anual span { font-size:8.5pt; font-weight:400; color:#888; }
+  .precio .mensual { font-size:8.5pt; color:#a06f1e; font-weight:600; margin-top:1px; }
+
+  /* Así de simple */
+  .simple { margin-bottom:18px; }
+  .simple h2 { font-size:9pt; letter-spacing:1.5px; text-transform:uppercase; color:#a06f1e; margin-bottom:10px; }
+  .pasos { display:flex; gap:12px; }
+  .paso { flex:1; text-align:center; padding:10px 8px; border-radius:8px; background:#faf8f4; }
+  .paso .num { width:26px; height:26px; border-radius:50%; background:#c98a2d; color:#fff; font-weight:800; font-size:11pt; line-height:26px; margin:0 auto 6px; }
+  .paso p { font-size:9pt; color:#4a4a4a; }
+
+  /* Cierre */
+  .cierre { border-top:1.5px solid #e3ddd2; padding-top:12px; display:flex; justify-content:space-between; align-items:center; gap:16px; }
+  .cierre .cta { font-size:10.5pt; color:#2b2b2b; }
+  .cierre .cta strong { color:#a06f1e; }
+  .vigencia { font-size:8.5pt; color:#999; text-align:right; white-space:nowrap; }
+  .legal { position:absolute; bottom:0.32in; left:0.65in; right:0.65in; font-size:7pt; color:#b5b0a6; text-align:center; }
+
+  /* Página 2 (solo si es necesaria): detalle ampliado */
+  .detalle h2 { font-size:9pt; letter-spacing:1.5px; text-transform:uppercase; color:#a06f1e; margin:14px 0 8px; }
+  .detalle table { width:100%; border-collapse:collapse; font-size:9.5pt; }
+  .detalle th { text-align:left; font-size:8pt; letter-spacing:1px; text-transform:uppercase; color:#999; padding:6px 10px; border-bottom:1.5px solid #e3ddd2; }
+  .detalle td { padding:7px 10px; border-bottom:1px solid #f2ede4; color:#4a4a4a; vertical-align:top; }
+  .detalle td:first-child { font-weight:600; color:#2b2b2b; width:34%; }
+  tr { page-break-inside:avoid; }
+  .op, .enjuego, .pasos { page-break-inside:avoid; }
+</style>
+</head>
+<body>
+
+<!-- ============ PÁGINA 1 (siempre) ============ -->
+<div class="page">
+  <div class="topbar"></div>
+  <div class="header">
+    <div>
+      <div class="kicker">Propuesta de protección</div>
+      <h1>{{NEGOCIO}}</h1>
+    </div>
+    <div class="meta">
+      <strong>{{NOMBRE_AGENTE}}</strong><br>
+      WhatsApp {{WHATSAPP_AGENTE}}<br>
+      {{FECHA}}
+    </div>
+  </div>
+
+  <div class="enjuego">
+    <h2>Lo que está en juego</h2>
+    <p>{{PARRAFO_EN_JUEGO — 2-3 líneas personalizadas al giro y al negocio, tono de cuidado, no de miedo}}</p>
+  </div>
+
+  <div class="opciones dos"><!-- una | dos | tres según # de opciones -->
+    <div class="op recomendada">
+      <div class="badge">Nuestra recomendación</div>
+      <div class="aseg">{{ASEGURADORA_1}}</div>
+      <h3>{{NOMBRE_OPCION_1}}</h3>
+      <ul>
+        <li>{{COBERTURA EN LENGUAJE HUMANO}}</li>
+        <li>{{COBERTURA EN LENGUAJE HUMANO}}</li>
+        <li>{{COBERTURA EN LENGUAJE HUMANO}}</li>
+        <li>{{4-6 líneas máximo}}</li>
+      </ul>
+      <div class="precio">
+        <div class="anual">{{$XX,XXX}} <span>al año</span></div>
+        <div class="mensual">{{o $X,XXX al mes}}</div>
+      </div>
+    </div>
+    <div class="op">
+      <div class="aseg">{{ASEGURADORA_2}}</div>
+      <h3>{{NOMBRE_OPCION_2}}</h3>
+      <ul>
+        <li>{{...}}</li>
+      </ul>
+      <div class="precio">
+        <div class="anual">{{$XX,XXX}} <span>al año</span></div>
+        <div class="mensual">{{o $X,XXX al mes}}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="simple">
+    <h2>Así de simple</h2>
+    <div class="pasos">
+      <div class="paso"><div class="num">1</div><p>Elige la opción que le late</p></div>
+      <div class="paso"><div class="num">2</div><p>Me manda un WhatsApp</p></div>
+      <div class="paso"><div class="num">3</div><p>Yo me encargo de todo el papeleo</p></div>
+    </div>
+  </div>
+
+  <div class="cierre">
+    <div class="cta">¿Dudas? Es un WhatsApp: <strong>{{WHATSAPP_AGENTE}}</strong> — lo vemos en 10 minutos.</div>
+    <div class="vigencia">Propuesta válida hasta el {{VIGENCIA}}</div>
+  </div>
+
+  <div class="legal">Resumen informativo elaborado por {{NOMBRE_AGENTE}}. Las condiciones exactas son las de la póliza emitida por la aseguradora.</div>
+</div>
+
+<!-- ============ PÁGINA 2 (SOLO si el detalle no cabe digno en la 1) ============
+<div class="page">
+  <div class="topbar"></div>
+  <div class="detalle">
+    <h2>El detalle, en palabras simples</h2>
+    <table>
+      <tr><th>Qué protege</th><th>Qué significa para su negocio</th></tr>
+      <tr><td>{{Nombre simple de la cobertura}}</td><td>{{Explicación humana de qué pasa y quién paga, con la suma en pesos}}</td></tr>
+    </table>
+    <h2>Preguntas que seguro trae</h2>
+    <table>
+      <tr><td>{{Pregunta típica}}</td><td>{{Respuesta en 1-2 líneas llanas}}</td></tr>
+    </table>
+  </div>
+  <div class="legal">Resumen informativo elaborado por {{NOMBRE_AGENTE}}. Las condiciones exactas son las de la póliza emitida por la aseguradora.</div>
+</div>
+-->
+
+</body>
+</html>
