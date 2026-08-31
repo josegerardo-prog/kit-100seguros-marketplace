@@ -20,7 +20,7 @@ Prompt:
 ## 4. Repaso de respuestas y citas (EN LA NUBE, diario 1:00 pm) — ÚNICA de nube
 Nombre: `Kit — Repaso respuestas y citas`
 Prompt:
-> Corre el modo programado (modo B) de la skill kit-respuestas-citas del kit del agente: revisa MIS WA-Listos rezagados de más de 48 horas, mis "Respondió" sin siguiente paso, mis citas de hoy y mañana en Google Calendar con mini-brief de cada una, y si algún prospecto mío me escribió por correo prepárame el borrador. Entrégame un resumen accionable de máximo 15 líneas.
+> Corre el modo programado (modo B) de la skill kit-respuestas-citas del kit del agente: revisa MIS WA-Listos rezagados de más de 48 horas, mis "Respondio" sin siguiente paso, mis citas de hoy y mañana en Google Calendar con mini-brief de cada una, y si algún prospecto mío me escribió por correo prepárame el borrador. Entrégame un resumen accionable de máximo 15 líneas.
 
 Requisito de la tarea de nube: Airtable, Gmail y Google Calendar conectados como conectores de NUBE. Verifícalo al crearla.
 

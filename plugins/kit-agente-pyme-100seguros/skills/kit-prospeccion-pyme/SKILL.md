@@ -11,7 +11,7 @@ Genera el lote diario de WhatsApps listos para enviar. El WhatsApp SIEMPRE lo ma
 
 ## PASO 0 — Cupo del día (rampa anti-baneo)
 
-Calcula semanas desde la fecha de arranque guardada: semanas 1-2 → cupo 8; semanas 3-4 → cupo 14; después → su meta diaria (de su identidad guardada, típico 20). Antes de generar nuevos, revisa cuántos WA-Listo SUYOS siguen sin enviar (ver PASO 5): si tiene ≥ cupo pendientes, NO generes más — recuérdale enviarlos y termina con telemetría en cero preparados.
+Calcula semanas desde la fecha de arranque guardada: semanas 1-2 → cupo 8; semanas 3-4 → cupo 14; después → su meta diaria (de su identidad guardada, típico 20). Antes de generar nuevos, revisa cuántos WA-Listo SUYOS siguen sin enviar (`list_records_for_table` en Contactos filtrando Agente = su nombre Y Estatus = WA-Listo por choice ID): si tiene ≥ cupo pendientes, NO generes más — recuérdale enviarlos y termina con telemetría en cero preparados.
 
 ## PASO 1 — Rotar giro y zona (dentro de SU territorio)
 
@@ -32,7 +32,7 @@ Todos — la promotoría y todos los agentes — escriben en la misma tabla, as�
 ## PASO 5 — Registrar el lote WA-Listo (la reserva del lead)
 
 UNA llamada `create_records_for_table` (typecast=true), una fila por lead:
-- Negocio `fldpqr5RDtNWUn2Jc` · Teléfono `fldBbVAnaZKgwvu5H` (formato +52 y 10 dígitos) · Email `fldNwk2c7aXsYiuDX` (si hay) · **Agente `fldY87ilp95V3Mip3` = nombre completo del agente** · Fecha `fldUprZ41CLEPNLZz` = hoy YYYY-MM-DD · Giro `fldQ0NnjyOxQ5ThWS` · Ciudad `fldocduZLpjrJ85xp` (la zona) · **Estatus `fldLJp1Ns7qEScBsN` = "WA-Listo"** · Segmento `fldkVYClwWfHGRndw` = "PyME" · Canal `fldAGeRoHff3QxgGv` = "WhatsApp" · Source `fld6NbrHA8RL8VbOC` = "Kit agente" · Nombre `fldvwCAWV6VxTouUl` (dueño, si se sabe) · Tema `fldraERshpAO7rRuj` (el campo de notas del kit) = señal usada + el mensaje redactado completo.
+- Negocio `fldpqr5RDtNWUn2Jc` · Teléfono `fldBbVAnaZKgwvu5H` (formato EXACTO: `+52` seguido de los 10 dígitos, pegado, sin espacios ni guiones — ej. +524421234567; de esto dependen el link wa.me y el dedup) · Email `fldNwk2c7aXsYiuDX` (si hay) · **Agente `fldY87ilp95V3Mip3` = nombre completo del agente** · Fecha `fldUprZ41CLEPNLZz` = hoy YYYY-MM-DD · Giro `fldQ0NnjyOxQ5ThWS` · Ciudad `fldocduZLpjrJ85xp` (la zona) · **Estatus `fldLJp1Ns7qEScBsN` = "WA-Listo"** · Segmento `fldkVYClwWfHGRndw` = "PyME" · Canal `fldAGeRoHff3QxgGv` = "WhatsApp" · Source `fld6NbrHA8RL8VbOC` = "Kit agente" · Nombre `fldvwCAWV6VxTouUl` (dueño, si se sabe) · Tema `fldraERshpAO7rRuj` (el campo de notas del kit) = señal usada + el mensaje redactado completo.
 
 Escribir la fila WA-Listo RESERVA el lead ante toda la red: por eso se registra ANTES de enviar, y lo antes posible — nunca dejes pasar tiempo entre el dedup y el registro (si la corrida se interrumpe y la retomas, repite el dedup antes de registrar). Cuando el agente avise que envió, cambia Estatus a "Contactado" (nunca borres la nota). Si el agente reporta que un número NO tiene WhatsApp: Estatus → "Sin WhatsApp" + nota `[sin-wa:FECHA]` (no cuenta como enviado; el lead queda reservado y bloqueado para toda la red) y repón ese lugar del cupo en la siguiente corrida.
 
@@ -48,7 +48,7 @@ Consulta `references/mapa-dolor-giros.md` para conocer el dolor del giro y afina
 
 ## PASO 7 — Telemetría (obligatoria)
 
-UNA fila en **Actividad Diaria** `tblYpC5aHIHsAnmZF`: Registro `fldrKPLjS3qQGfKPK` = "<agente> — <fecha> — prospección" · Fecha `fld7DdDOp1VHff0dr` · **Agente `fldS7eQUbSSjAzTHw` = nombre completo** · Giro `fldr0Kl6xBeGgneO5` · Zona `fldp2uNIanDR9YlKo` · WA preparados `fldtPM6uzcNgt0SGJ` = # del lote · Gasto Apify `fldPbFVmnMtBVR1XH` = USD real · Notas `fldM39AcXxCaQIjgO` = incidencias (giro saturado, cupo no alcanzado, etc.).
+Busca primero si YA existe la fila del día (Agente = su nombre Y Fecha = hoy) en **Actividad Diaria** `tblYpC5aHIHsAnmZF`: si existe (p. ej. una segunda corrida el mismo día), SÚMALE los valores a esa fila en vez de crear otra — una sola fila por agente por día. Si no existe, créala: Registro `fldrKPLjS3qQGfKPK` = "<agente> — <fecha> — prospección" · Fecha `fld7DdDOp1VHff0dr` · **Agente `fldS7eQUbSSjAzTHw` = nombre completo** · Giro `fldr0Kl6xBeGgneO5` · Zona `fldp2uNIanDR9YlKo` · WA preparados `fldtPM6uzcNgt0SGJ` = # del lote · Gasto Apify `fldPbFVmnMtBVR1XH` = USD real · Notas `fldM39AcXxCaQIjgO` = incidencias (giro saturado, cupo no alcanzado, etc.).
 
 ## PASO 8 — Entregar y refrescar panel
 

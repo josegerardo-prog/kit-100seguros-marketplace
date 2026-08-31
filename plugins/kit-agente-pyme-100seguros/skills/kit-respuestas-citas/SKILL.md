@@ -24,7 +24,7 @@ Base `appnfv9ZIaqzKfRwg` · Contactos `tblYVlPNaTs3CQfDw` (Negocio `fldpqr5RDtNW
 
 Corre TODO filtrado por Agente = su nombre completo:
 1. **WA-Listos rezagados**: los de hace >48h sin cambiar a Contactado → lista corta de recordatorio ("tienes N pendientes de enviar").
-2. **Respondió sin siguiente paso**: Estatus "Respondio" sin nota `[puntos:]` ni cita en >24h → recuérdale con el borrador de contestación listo.
+2. **"Respondio" sin siguiente paso**: Estatus "Respondio" sin nota `[puntos:]` ni cita en >24h → recuérdale con el borrador de contestación listo.
 3. **Citas de hoy y mañana**: léelas de su Google Calendar; prepárale por cada una un mini-brief (negocio, giro, señal, puntos entregados, qué preguntar en ruta diagnóstico — el cross-sell a vida/GMM solo se menciona EN la cita).
 4. **Hilos de Gmail**: si algún prospecto le escribió por correo (búsqueda nativa por los emails de SUS leads), resúmelo y bórrale la duda con un borrador de respuesta. El kit NO manda correo en frío; Gmail es solo para responder hilos existentes.
 5. Entrega un resumen único y accionable (máx 15 líneas). Si no hay nada, dilo en una línea y termina.

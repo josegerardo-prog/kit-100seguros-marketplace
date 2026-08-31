@@ -13,7 +13,7 @@ El centro de operación diario del agente: abrirlo, enviar sus WhatsApps, marcar
 
 1. **Cola WA-Listo**: Contactos `tblYVlPNaTs3CQfDw` con Estatus "WA-Listo" — negocio, teléfono, giro, zona (campo Ciudad), fecha, y el mensaje redactado (desde Tema `fldraERshpAO7rRuj`, el campo de notas del kit).
 2. **Seguimientos del día**: filas "Contactado" con `[seg7:]` de hoy en Tema — con su mensaje de seguimiento.
-3. **Pipeline vivo**: conteos por Estatus (WA-Listo, Contactado, Respondió, Cita, Cliente, No interesado) y lista corta de "Respondio" pendientes de siguiente paso.
+3. **Pipeline vivo**: conteos por Estatus (WA-Listo, Contactado, "Respondio" — así, sin acento, nombre exacto de la opción —, Cita, Cliente, No interesado) y lista corta de "Respondio" pendientes de siguiente paso.
 4. **Sus números**: de Actividad Diaria `tblYpC5aHIHsAnmZF` (filtrado por su Agente), últimos 14 días: WA enviados, respuestas, citas, cierres, gasto Apify; y su avance de hoy contra su cupo de rampa.
 
 ## Generar el artifact
