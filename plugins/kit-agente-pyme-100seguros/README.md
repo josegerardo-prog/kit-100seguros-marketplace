@@ -17,7 +17,7 @@ Sistema de prospección de PyMEs para agentes de la red de Gerardo López (100% 
 
 1. **Claude** (plan con Cowork en escritorio) — lo pagas tú.
 2. **Conectores**: Airtable, Apify, Google Calendar y Gmail. Airtable, Gmail y Calendar conéctalos también como conectores de nube (los usa la tarea de respuestas). Apify lo pagas tú (~$0.50–1.00 USD por corrida).
-3. **Acceso a la base de la promotoría**: todo el sistema vive en UNA sola base de Airtable (la de trabajo de la promotoría). Únete con este link, iniciando sesión en Airtable con la MISMA cuenta que conectarás a Claude: https://airtable.com/invite/l?inviteId=invGuvGAP1KcoIrHo&inviteToken=46f0cca33a9c5f09ba3e7b1469460ca53a6d1d30f304e5871bd40721ec765036 (si ya no funciona, pídele la invitación a Gerardo). Sin ese acceso el kit no arranca. Tus leads se identifican con tu nombre y el kit solo te muestra los tuyos. El kit **nunca** crea bases propias.
+3. **Acceso a la base de la promotoría**: todo el sistema vive en UNA sola base de Airtable (la de trabajo de la promotoría). Pídele a Gerardo tu link de invitación por WhatsApp (**+52 442 157 1141**) — te lo manda por privado; ábrelo iniciando sesión en Airtable con la MISMA cuenta que conectarás a Claude. Sin ese acceso el kit no arranca. Tus leads se identifican con tu nombre y el kit solo te muestra los tuyos. El kit **nunca** crea bases propias.
 4. **Tu territorio**: acuerda con Gerardo tus giros, zonas y meta diaria antes de arrancar (WhatsApp **+52 442 157 1141**); el kit te los pregunta al configurarte.
 5. **WhatsApp Business** recomendado, con perfil completo (foto, nombre, descripción).
 

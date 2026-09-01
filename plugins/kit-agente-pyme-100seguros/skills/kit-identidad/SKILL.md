@@ -18,7 +18,7 @@ Pregunta al agente, con AskUserQuestion o en conversación:
 Base única del sistema (la base de trabajo de la promotoría): `appnfv9ZIaqzKfRwg` (dueño: Gerardo). **La invitación de colaborador a esta base ES el alta**: si Gerardo no lo ha invitado, el kit no puede operar — no hay registro aparte que validar.
 
 1. Verifica que la base aparezca con el conector de Airtable (una lectura de prueba a la tabla Contactos `tblYVlPNaTs3CQfDw` basta).
-2. **Si no aparece o da error de permisos**: DETENTE y dale al agente el link de invitación a la base para que lo abra en su navegador con la cuenta de Airtable que conectó a Claude: https://airtable.com/invite/l?inviteId=invGuvGAP1KcoIrHo&inviteToken=46f0cca33a9c5f09ba3e7b1469460ca53a6d1d30f304e5871bd40721ec765036 — tras aceptar, que vuelva a decir "configúrame el kit". Si el link ya no funciona (Gerardo puede revocarlo), que le pida la invitación por WhatsApp al +52 442 157 1141. PROHIBIDO ABSOLUTO crear otra base, tabla o campo como sustituto.
+2. **Si no aparece o da error de permisos**: DETENTE. Dile al agente que le pida a Gerardo el LINK DE INVITACIÓN a la base por WhatsApp (+52 442 157 1141) — Gerardo se lo manda por privado; el agente lo abre en su navegador con la MISMA cuenta de Airtable que conectó a Claude, acepta, y vuelve a decir "configúrame el kit". El link nunca viene dentro del kit por seguridad. PROHIBIDO ABSOLUTO crear otra base, tabla o campo como sustituto.
 
 ## PASO 3 — Configurar y guardar la identidad localmente
 
