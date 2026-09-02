@@ -35,7 +35,7 @@ Todas las demás skills del kit leen esta memoria al arrancar. Si el agente dice
 
 Revisa y reporta el estado de los conectores requisito:
 - **Airtable** (ya validado arriba) — local Y de nube.
-- **Apify** (para la prospección; el agente paga su propio plan, gasto típico $0.50–1.00 USD/día).
+- **Apify** (para la prospección Y para verificar que cada número tenga WhatsApp antes de entrar a la cola; el agente paga su propio plan, gasto típico $0.50–1.00 USD/día ya incluyendo el verificador).
 - **Google Calendar** (citas).
 - **Gmail** (solo leer/responder hilos; el kit NO manda correo en frío).
 

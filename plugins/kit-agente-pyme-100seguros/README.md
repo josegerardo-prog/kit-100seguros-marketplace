@@ -7,7 +7,7 @@ Sistema de prospección de PyMEs para agentes de la red de Gerardo López (100% 
 | Skill | Qué hace | Cómo corre |
 |---|---|---|
 | kit-identidad | Tu configuración inicial (nombre, territorio, meta) | Una vez, al instalar |
-| kit-prospeccion-pyme | Tu lote diario de WhatsApps listos, con dedup de toda la red | Programada L-V ~7am, **en tu computadora** |
+| kit-prospeccion-pyme | Tu lote diario de WhatsApps listos, con dedup de toda la red y números verificados en WhatsApp | Programada L-V ~7am, **en tu computadora** |
 | kit-respuestas-citas | Contesta respuestas, genera los 2-3 puntos del giro, agenda citas | A demanda + programada diaria ~1pm, **en la nube** |
 | kit-seguimiento-dia7 | El segundo toque a quien no contestó (el que más respuesta da) | Programada diaria, **en tu computadora** |
 | kit-propuesta-pdf | Convierte tus cotizaciones en una propuesta PDF de una página, sin tecnicismos, lista para mandar | A demanda, cuando tengas cotizaciones |
@@ -32,6 +32,7 @@ Instala el plugin y dile a Claude: **"configúrame el kit"**. Te preguntará tu 
 - **El dedup es sagrado.** Si un negocio ya fue contactado por cualquiera de la red (o es cartera de la promotoría), el kit lo descarta solo. Nadie pisa a nadie.
 - **El WhatsApp lo mandas TÚ, a mano.** Nada de envíos automáticos: es tu voz y tu relación. El kit te lo deja redactado y con link directo.
 - **Rampa anti-baneo**: 8/día las primeras 2 semanas → 14 → tu meta. No hay atajo; un número baneado es el negocio parado.
+- **Números verificados antes de entrar a tu cola.** El kit comprueba en cada corrida que el número del prospecto SÍ tenga WhatsApp (verificador de Apify, centavos por lote); a ti solo te llegan números vivos.
 - **Sin correo en frío.** Gmail solo se usa para responder hilos existentes.
 - **La primera conversación no vende.** Se ofrece ayuda (los 2-3 puntos del giro); la venta llega en la cita.
 - **Las propuestas, sin letras chiquitas.** El PDF que mandas dice lo que el cliente vive, no lo que dice la póliza; lo técnico exacto vive en la póliza emitida.

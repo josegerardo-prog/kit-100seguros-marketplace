@@ -1,6 +1,6 @@
 ---
 name: kit-prospeccion-pyme
-description: Corrida diaria de prospección PyME del agente 100% Seguros. Ejecutar cuando el agente diga "corre mi prospección", "dame mis WhatsApps de hoy", "prospección de hoy", o desde su tarea programada diaria EN SU COMPUTADORA (L-V ~7am). Descubre PyMEs con Apify en su territorio, deduplica contra la red y deja su lote WA-Listo con mensajes redactados.
+description: Corrida diaria de prospección PyME del agente 100% Seguros. Ejecutar cuando el agente diga "corre mi prospección", "dame mis WhatsApps de hoy", "prospección de hoy", o desde su tarea programada diaria EN SU COMPUTADORA (L-V ~7am). Descubre PyMEs con Apify en su territorio, deduplica contra la red, VERIFICA que cada número tenga WhatsApp y deja su lote WA-Listo con mensajes redactados.
 ---
 
 # Prospección PyME diaria (motor del agente)
@@ -29,14 +29,24 @@ PyMEs LOCALES con teléfono publicado. DESCARTA: cadenas/franquicias nacionales 
 
 Todos — la promotoría y todos los agentes — escriben en la misma tabla, así que el dedup es un solo cruce y siempre está al día. Por cada candidato, `list_records_for_table` sobre Contactos `tblYVlPNaTs3CQfDw` (NUNCA `search_records`) con filtro exacto SIN filtrar por Agente ni Segmento (el cruce es contra TODO): Telefono `fldBbVAnaZKgwvu5H` contains (últimos 10 dígitos) — y si trae email, Email `fldNwk2c7aXsYiuDX` igualdad. Si existe, con cualquier estatus, segmento o dueño: descártalo en silencio — jamás muestres ni comentes el registro existente ni de quién es (esta consulta solo responde "existe / libre"). Quédate con NUEVOS hasta llenar el cupo. Si el giro/zona del día no alcanza el cupo, repite PASO 2 con el siguiente giro de su lista (máx 2 giros extra por corrida, respetando el tope Apify); si aun así no alcanza, entrega lo que haya y anótalo en telemetría.
 
-## PASO 5 — Registrar el lote WA-Listo (la reserva del lead)
+## PASO 5 — VERIFICAR WHATSAPP (obligatorio: ningún número entra a la cola sin verificar)
+
+Ningún lead se entrega al agente sin confirmar que su número SÍ tiene WhatsApp — de lo contrario el agente quema tiempo y cupo de rampa en números muertos. Verifica el lote completo en UNA corrida del actor de Apify **devscrapper/whatsapp-number-validator** (`call-actor`, async, poll hasta SUCCEEDED, luego dataset):
+- Input: `{"phoneNumbers": ["52<10 dígitos>", ...]}` — formato SIN el signo `+`, con lada de país 52 pegada (ej. `524421234567`). Máx 100 números por corrida.
+- Junta de PASO 4 unos cuantos candidatos más que el cupo (cupo + ~30%) para que los que caigan aquí no dejen el lote corto.
+- Lee el resultado por número: solo los que el actor confirme como REGISTRADOS en WhatsApp siguen al PASO 6 como WA-Listo, hasta llenar el cupo.
+- Los NO registrados: regístralos igualmente en Contactos (misma fila del PASO 6) pero con **Estatus "Sin WhatsApp"** y nota `[sin-wa-verificado:FECHA]` en Tema, sin mensaje redactado — así quedan bloqueados para toda la red y el dedup no los vuelve a comprar a Apify. NO cuentan para el cupo.
+- Costo: ~$0.004 USD por número — súmalo al Gasto Apify de la telemetría (cabe de sobra en el tope de la corrida).
+- Si el actor falla o no está disponible: NO inventes resultados. Registra el lote como WA-Listo con nota `[wa-sin-verificar:FECHA]` en Tema, avisa al agente que esos números NO están verificados y que use el botón "🚫 Sin WhatsApp" del panel con los que fallen, y anota la incidencia en telemetría.
+
+## PASO 6 — Registrar el lote WA-Listo (la reserva del lead)
 
 UNA llamada `create_records_for_table` (typecast=true), una fila por lead:
 - Negocio `fldpqr5RDtNWUn2Jc` · Teléfono `fldBbVAnaZKgwvu5H` (formato EXACTO: `+52` seguido de los 10 dígitos, pegado, sin espacios ni guiones — ej. +524421234567; de esto dependen el link wa.me y el dedup) · Email `fldNwk2c7aXsYiuDX` (si hay) · **Agente `fldY87ilp95V3Mip3` = nombre completo del agente** · Fecha `fldUprZ41CLEPNLZz` = hoy YYYY-MM-DD · Giro `fldQ0NnjyOxQ5ThWS` · Ciudad `fldocduZLpjrJ85xp` (la zona) · **Estatus `fldLJp1Ns7qEScBsN` = "WA-Listo"** · Segmento `fldkVYClwWfHGRndw` = "PyME" · Canal `fldAGeRoHff3QxgGv` = "WhatsApp" · Source `fld6NbrHA8RL8VbOC` = "Kit agente" · Nombre `fldvwCAWV6VxTouUl` (dueño, si se sabe) · Tema `fldraERshpAO7rRuj` (el campo de notas del kit) = señal usada + el mensaje redactado completo.
 
 Escribir la fila WA-Listo RESERVA el lead ante toda la red: por eso se registra ANTES de enviar, y lo antes posible — nunca dejes pasar tiempo entre el dedup y el registro (si la corrida se interrumpe y la retomas, repite el dedup antes de registrar). Cuando el agente avise que envió, cambia Estatus a "Contactado" (nunca borres la nota). Si el agente reporta que un número NO tiene WhatsApp: Estatus → "Sin WhatsApp" + nota `[sin-wa:FECHA]` (no cuenta como enviado; el lead queda reservado y bloqueado para toda la red) y repón ese lugar del cupo en la siguiente corrida.
 
-## PASO 6 — Redactar cada WhatsApp (canon del kit)
+## PASO 7 — Redactar cada WhatsApp (canon del kit)
 
 Reglas duras: 45–60 palabras, de USTED, cálido y llano, tono de persona (no de compañía), SIN la palabra "seguros" ni "asesor" ni nombre de empresa, SIN enlaces, sin mayúsculas de grito. Estructura:
 1. Apertura = UNA señal real y específica del negocio (de reseñas, antigüedad, sucursales). No inventes.
@@ -46,10 +56,10 @@ Reglas duras: 45–60 palabras, de USTED, cálido y llano, tono de persona (no d
 
 Consulta `references/mapa-dolor-giros.md` para conocer el dolor del giro y afinar la señal — pero los 2-3 puntos NO se mandan en el primer mensaje: se prometen; se entregan cuando responda (skill kit-respuestas-citas). Varía apertura y fraseo entre mensajes; nunca dos mensajes idénticos.
 
-## PASO 7 — Telemetría (obligatoria)
+## PASO 8 — Telemetría (obligatoria)
 
 Busca primero si YA existe la fila del día (Agente = su nombre Y Fecha = hoy) en **Actividad Diaria** `tblYpC5aHIHsAnmZF`: si existe (p. ej. una segunda corrida el mismo día), SÚMALE los valores a esa fila en vez de crear otra — una sola fila por agente por día. Si no existe, créala: Registro `fldrKPLjS3qQGfKPK` = "<agente> — <fecha> — prospección" · Fecha `fld7DdDOp1VHff0dr` · **Agente `fldS7eQUbSSjAzTHw` = nombre completo** · Giro `fldr0Kl6xBeGgneO5` · Zona `fldp2uNIanDR9YlKo` · WA preparados `fldtPM6uzcNgt0SGJ` = # del lote · Gasto Apify `fldPbFVmnMtBVR1XH` = USD real · Notas `fldM39AcXxCaQIjgO` = incidencias (giro saturado, cupo no alcanzado, etc.).
 
-## PASO 8 — Entregar y refrescar panel
+## PASO 9 — Entregar y refrescar panel
 
 Resume en 3 líneas: giro/zona, # preparados, # descartados por dedup. Luego corre la skill kit-panel-agente para refrescar su panel con el lote nuevo (links wa.me y mensajes listos para copiar). Recuérdale: enviar a mano, espaciado en el día (no ráfagas), y avisarte quién respondió.
