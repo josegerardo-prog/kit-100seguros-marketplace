@@ -10,7 +10,7 @@
     {
       "name": "kit-agente-pyme-100seguros",
       "source": "./plugins/kit-agente-pyme-100seguros",
-      "version": "1.2.2",
+      "version": "1.3.0",
       "description": "Kit de prospección PyME para agentes de la red 100% Seguros: 20 WhatsApps diarios con efecto compuesto. Identidad por agente, base central compartida con dedup, asistente de respuestas y citas, seguimiento día 7, propuestas en PDF sin tecnicismos y panel WA-Listo.",
       "author": "Gerardo López — 100% Seguros, Querétaro",
       "category": "ventas",
