@@ -1,6 +1,6 @@
 ---
 name: kit-panel-agente
-description: Panel WA-Listo del agente 100% Seguros. Ejecutar cuando el agente diga "mi panel", "mis WhatsApps pendientes", "refresca mi panel", o al final de las corridas de prospección y seguimiento EN SU COMPUTADORA. Crea UNA VEZ el artifact persistente "panel-agente" en la galería de Cowork del agente y en cada corrida lo ACTUALIZA en su lugar (nunca archivos sueltos ni duplicados), con SU cola de WhatsApps, sus seguimientos y sus números — solo con SUS registros.
+description: Panel WA-Listo del agente 100% Seguros, EN VIVO. Ejecutar cuando el agente diga "mi panel", "mis WhatsApps pendientes", "refresca mi panel", o al final de las corridas de prospección y seguimiento EN SU COMPUTADORA. Crea UNA VEZ el artifact persistente "panel-agente" en la galería de Cowork del agente y lo ACTUALIZA en su lugar (nunca archivos sueltos ni duplicados). El panel lee Airtable en tiempo real al abrirse — cola de WhatsApps, seguimientos y números, solo con SUS registros.
 ---
 
 # Panel WA-Listo del agente
@@ -8,6 +8,24 @@ description: Panel WA-Listo del agente 100% Seguros. Ejecutar cuando el agente d
 El centro de operación diario del agente: abrirlo, enviar sus WhatsApps, marcar avances. Es un artifact local en SU computadora, generado exclusivamente con SUS registros.
 
 **Antes de todo**: carga la identidad desde la memoria del proyecto (`kit-identidad.md`); si no existe → corre kit-identidad. Aplican las 5 REGLAS INNEGOCIABLES del kit (ver kit-identidad). **AISLAMIENTO ESTRICTO**: cada consulta de este panel lleva el filtro Agente `fldY87ilp95V3Mip3` = nombre completo del agente. Ningún dato de otro agente puede entrar al HTML, ni en totales ni en listas. El "Radar de la Red" (vista global) es exclusivo de Gerardo y NO existe en este kit.
+
+## EL PANEL ES EN VIVO: lee Airtable al abrirse, no lleva datos horneados
+
+El HTML NO contiene los leads incrustados: la propia página consulta Airtable EN VIVO cada vez que el agente la abre o pulsa refrescar, usando el conector de Airtable del agente. Así el panel siempre está al día sin esperar la corrida. Mecánica obligatoria (idéntica a los paneles del promotor):
+
+1. **Bloque de metadatos al inicio del HTML** (antes de `<html>`), declarando las herramientas MCP que la página usará — con los NOMBRES EXACTOS de las herramientas de Airtable disponibles en TU sesión al crear el panel (incluyen el prefijo del conector del agente, p. ej. `mcp__<id-del-conector>__list_records_for_table`):
+```
+<script type="application/json" id="cowork-artifact-meta">
+{ "name": "Panel del Agente", "schemaVersion": 1,
+  "description": "Panel en vivo del agente: cola WA-Listo, seguimientos y números, leído en tiempo real de Airtable (solo sus registros).",
+  "mcpTools": ["<tool list_records_for_table>", "<tool update_records_for_table>", "<tool create_records_for_table>"],
+  "mcpServerNames": ["Airtable", "Airtable", "Airtable"] }
+</script>
+```
+2. **Llamadas en vivo desde el JS de la página** con `window.cowork.callMcpTool(nombreDeTool, argumentos)`; parsea la respuesta de `r.structuredContent` o, si no viene, de `JSON.parse(r.content[0].text)`, y toma los campos de `rec.cellValuesByFieldId || rec.fields`.
+3. **Cablea como constantes en el HTML**: baseId `appnfv9ZIaqzKfRwg`, los tableIds y fldIds de abajo, y el NOMBRE COMPLETO del agente (de su identidad guardada). CADA lectura de Contactos y de Actividad Diaria lleva el filtro por Agente en la llamada: `filters: {"operands":[{"operator":"=","operands":["<fld Agente>","<nombre completo>"]}]}` (Agente es campo de texto: la igualdad con string funciona). El filtrado por Estatus se hace del lado del cliente sobre los nombres de opción ("WA-Listo", "Contactado", "Respondio" sin acento, etc.) — así la página no depende de choice IDs.
+4. **Acciones en vivo desde el panel**: botón "✅ Ya lo envié" en cada tarjeta WA-Listo → `update_records_for_table` cambiando Estatus a "Contactado" (el valor se escribe como texto con el nombre exacto de la opción), y además suma 1 a "WA enviados" en la fila de Actividad Diaria del día del agente (búscala con filtro Agente+Fecha; si no existe, créala con `create_records_for_table`). Botón "🚫 Sin WhatsApp" → Estatus "Sin WhatsApp". Muestra confirmación (toast) y actualiza la vista sin recargar.
+5. Maneja errores con mensaje amable ("no pude conectar con Airtable, revisa tu conector") — nunca en silencio.
 
 ## Datos (todos de base `appnfv9ZIaqzKfRwg`, todos filtrados por su Agente)
 
